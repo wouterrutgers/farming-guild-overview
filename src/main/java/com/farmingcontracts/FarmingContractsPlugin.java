@@ -40,13 +40,6 @@ public class FarmingContractsPlugin extends Plugin
 		overlayManager.remove(overlay);
 	}
 
-	@Subscribe
-	public void onGameTick(GameTick event) {
-		if (isInFarmingGuild()) {
-			// Do something
-		}
-	}
-
 	public boolean isInFarmingGuild() {
 		Player player = client.getLocalPlayer();
 		if (player == null) {
