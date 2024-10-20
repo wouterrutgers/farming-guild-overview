@@ -1,14 +1,12 @@
-package com.farmingcontracts;
+package com.farmingguildoverview;
 
 import java.util.List;
-import java.util.Map;
-import net.runelite.api.Varbits;
 
-public class FarmingContracts {
-    protected static final List<PatchState> contracts;
+public class FarmingGuildPatches {
+    protected static final List<PatchState> patches;
 
     static {
-        contracts = List.of(
+        patches = List.of(
             PatchState.REDWOOD,
             PatchState.FRUIT_TREE,
             PatchState.CELASTRUS,

@@ -1,13 +1,13 @@
-package com.farmingcontracts;
+package com.farmingguildoverview;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class FarmingContractsPluginTest
+public class FarmingGuildOverviewPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(FarmingContractsPlugin.class);
+		ExternalPluginManager.loadBuiltin(FarmingGuildOverviewPlugin.class);
 		RuneLite.main(args);
 	}
 }

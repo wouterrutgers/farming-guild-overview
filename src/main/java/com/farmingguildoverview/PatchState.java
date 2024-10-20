@@ -1,4 +1,4 @@
-package com.farmingcontracts;
+package com.farmingguildoverview;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

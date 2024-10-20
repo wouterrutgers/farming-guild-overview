@@ -1,4 +1,4 @@
-package com.farmingcontracts;
+package com.farmingguildoverview;
 
 import java.awt.*;
 import javax.inject.Inject;
@@ -6,13 +6,12 @@ import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.LineComponent;
 import net.runelite.client.ui.overlay.components.TitleComponent;
-import net.runelite.client.ui.overlay.infobox.InfoBox;
 
-public class FarmingContractsOverlay extends OverlayPanel {
-    private final FarmingContractsPlugin plugin;
+public class FarmingGuildOverviewOverlay extends OverlayPanel {
+    private final FarmingGuildOverviewPlugin plugin;
 
     @Inject
-    public FarmingContractsOverlay(FarmingContractsPlugin plugin) {
+    public FarmingGuildOverviewOverlay(FarmingGuildOverviewPlugin plugin) {
         super(plugin);
         setPosition(OverlayPosition.TOP_LEFT);
 
@@ -27,12 +26,12 @@ public class FarmingContractsOverlay extends OverlayPanel {
 
         panelComponent.getChildren().add(
             TitleComponent.builder()
-                .text("Farming Contracts")
+                .text("Farming Guild Overview")
                 .color(Color.WHITE)
                 .build()
         );
 
-        for (PatchState contract : FarmingContracts.contracts) {
+        for (PatchState contract : FarmingGuildPatches.patches) {
             String state = plugin.getCropState(contract);
 
             panelComponent.getChildren().add(
