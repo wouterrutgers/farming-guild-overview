@@ -31,12 +31,12 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
                 .build()
         );
 
-        for (PatchState contract : FarmingGuildPatches.patches) {
-            String state = plugin.getCropState(contract);
+        for (PatchState patch : FarmingGuildPatches.patches) {
+            String state = plugin.getCropState(patch);
 
             panelComponent.getChildren().add(
                 LineComponent.builder()
-                    .left(contract.getName())
+                    .left(patch.getName())
                     .right(state)
                     .rightColor(colorFor(state))
                     .build()
