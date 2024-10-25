@@ -10,12 +10,15 @@ import net.runelite.client.ui.overlay.components.TitleComponent;
 public class FarmingGuildOverviewOverlay extends OverlayPanel {
     private final FarmingGuildOverviewPlugin plugin;
 
+    private final FarmingGuildOverviewConfig config;
+
     @Inject
-    public FarmingGuildOverviewOverlay(FarmingGuildOverviewPlugin plugin) {
+    public FarmingGuildOverviewOverlay(FarmingGuildOverviewPlugin plugin, FarmingGuildOverviewConfig config) {
         super(plugin);
         setPosition(OverlayPosition.TOP_LEFT);
 
         this.plugin = plugin;
+        this.config = config;
     }
 
     @Override
@@ -51,15 +54,17 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
     private Color colorFor(String color) {
         switch (color) {
             case "Diseased":
-                return Color.ORANGE;
+                return config.diseased();
             case "Dead":
-                return Color.RED;
+                return config.dead();
             case "Growing":
-                return new Color(34, 139, 34);
+                return config.growing();
             case "Completed":
-                return new Color(124, 252, 0);
+                return config.completed();
+            case "Checked":
+                return config.checked();
             default:
-                return Color.WHITE;
+                return config.empty();
         }
     }
 }

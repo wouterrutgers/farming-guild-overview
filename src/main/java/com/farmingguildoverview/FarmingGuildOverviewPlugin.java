@@ -1,10 +1,12 @@
 package com.farmingguildoverview;
 
+import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
@@ -17,6 +19,9 @@ public class FarmingGuildOverviewPlugin extends Plugin
 {
 	@Inject
 	private Client client;
+
+	@Inject
+	private FarmingGuildOverviewConfig config;
 
 	@Inject
 	private OverlayManager overlayManager;
@@ -44,5 +49,11 @@ public class FarmingGuildOverviewPlugin extends Plugin
 
 	public String getCropState(PatchState patchState) {
 		return patchState.forVarbitValue(client.getVarbitValue(patchState.getVarbit()));
+	}
+
+	@Provides
+	FarmingGuildOverviewConfig provideConfig(ConfigManager configManager)
+	{
+		return configManager.getConfig(FarmingGuildOverviewConfig.class);
 	}
 }
