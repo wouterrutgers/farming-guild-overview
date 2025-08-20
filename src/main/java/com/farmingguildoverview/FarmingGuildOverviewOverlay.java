@@ -1,6 +1,8 @@
 package com.farmingguildoverview;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -23,21 +25,21 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
 
     @Override
     public Dimension render(Graphics2D graphics) {
+        panelComponent.getChildren().clear();
+
         if (!plugin.isInFarmingGuild()) {
             return null;
         }
 
-        panelComponent.getChildren().add(
-            TitleComponent.builder()
-                .text("Farming Guild Overview")
-                .color(Color.WHITE)
-                .build()
-        );
-
+        List<LineComponent> visibleLines = new ArrayList<>();
         for (PatchState patch : FarmingGuildPatches.patches) {
             String state = plugin.getCropState(patch);
 
-            panelComponent.getChildren().add(
+            if (!shouldShowPatch(state)) {
+                continue;
+            }
+
+            visibleLines.add(
                 LineComponent.builder()
                     .left(patch.getName())
                     .right(state)
@@ -45,6 +47,19 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
                     .build()
             );
         }
+
+        if (visibleLines.isEmpty()) {
+            return null;
+        }
+
+        panelComponent.getChildren().add(
+            TitleComponent.builder()
+                .text("Farming Guild overview")
+                .color(Color.WHITE)
+                .build()
+        );
+
+        panelComponent.getChildren().addAll(visibleLines);
 
         panelComponent.setPreferredSize(new Dimension(180, 0));
 
@@ -65,6 +80,19 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
                 return config.checked();
             default:
                 return config.empty();
+        }
+    }
+
+    private boolean shouldShowPatch(String state) {
+        switch (state) {
+            case "Empty":
+            case "-":
+                return config.showEmpty();
+            case "Growing":
+            case "Completed":
+                return config.showGrowingComplete();
+            default:
+                return true;
         }
     }
 }
