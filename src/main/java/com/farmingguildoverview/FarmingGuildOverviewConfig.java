@@ -10,11 +10,40 @@ import net.runelite.client.config.ConfigSection;
 public interface FarmingGuildOverviewConfig extends Config
 {
     @ConfigSection(
-        name = "Colors",
-        description = "Colors for different crop states",
+        name = "Display Options",
+        description = "Options for what to show in the overlay",
         position = 0
     )
+    String display = "display";
+
+    @ConfigSection(
+        name = "Colors",
+        description = "Colors for different crop states",
+        position = 1
+    )
     String colors = "colors";
+
+    @ConfigItem(
+        keyName = "showEmpty",
+        name = "Show empty",
+        description = "Show empty patches in the overlay",
+        section = display
+    )
+    default boolean showEmpty()
+    {
+        return true;
+    }
+
+    @ConfigItem(
+        keyName = "showGrowingComplete",
+        name = "Show growing/complete",
+        description = "Show growing and complete patches in the overlay",
+        section = display
+    )
+    default boolean showGrowingComplete()
+    {
+        return true;
+    }
 
     @ConfigItem(
         keyName = "diseased",

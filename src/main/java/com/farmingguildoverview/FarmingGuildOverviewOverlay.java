@@ -37,6 +37,11 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
         for (PatchState patch : FarmingGuildPatches.patches) {
             String state = plugin.getCropState(patch);
 
+            // Skip rendering based on config settings
+            if (!shouldShowPatch(state)) {
+                continue;
+            }
+
             panelComponent.getChildren().add(
                 LineComponent.builder()
                     .left(patch.getName())
@@ -65,6 +70,20 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
                 return config.checked();
             default:
                 return config.empty();
+        }
+    }
+
+    private boolean shouldShowPatch(String state) {
+        switch (state) {
+            case "Empty":
+            case "-": // Default/unknown state is treated like empty
+                return config.showEmpty();
+            case "Growing":
+            case "Completed":
+                return config.showGrowingComplete();
+            default:
+                // Always show other states (Diseased, Dead, Checked)
+                return true;
         }
     }
 }
