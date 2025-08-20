@@ -1,6 +1,8 @@
 package com.farmingguildoverview;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
@@ -23,26 +25,21 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
 
     @Override
     public Dimension render(Graphics2D graphics) {
+        panelComponent.getChildren().clear();
+
         if (!plugin.isInFarmingGuild()) {
             return null;
         }
 
-        panelComponent.getChildren().add(
-            TitleComponent.builder()
-                .text("Farming Guild Overview")
-                .color(Color.WHITE)
-                .build()
-        );
-
+        List<LineComponent> visibleLines = new ArrayList<>();
         for (PatchState patch : FarmingGuildPatches.patches) {
             String state = plugin.getCropState(patch);
 
-            // Skip rendering based on config settings
             if (!shouldShowPatch(state)) {
                 continue;
             }
 
-            panelComponent.getChildren().add(
+            visibleLines.add(
                 LineComponent.builder()
                     .left(patch.getName())
                     .right(state)
@@ -50,6 +47,19 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
                     .build()
             );
         }
+
+        if (visibleLines.isEmpty()) {
+            return null;
+        }
+
+        panelComponent.getChildren().add(
+            TitleComponent.builder()
+                .text("Farming Guild overview")
+                .color(Color.WHITE)
+                .build()
+        );
+
+        panelComponent.getChildren().addAll(visibleLines);
 
         panelComponent.setPreferredSize(new Dimension(180, 0));
 
@@ -76,13 +86,12 @@ public class FarmingGuildOverviewOverlay extends OverlayPanel {
     private boolean shouldShowPatch(String state) {
         switch (state) {
             case "Empty":
-            case "-": // Default/unknown state is treated like empty
+            case "-":
                 return config.showEmpty();
             case "Growing":
             case "Completed":
                 return config.showGrowingComplete();
             default:
-                // Always show other states (Diseased, Dead, Checked)
                 return true;
         }
     }

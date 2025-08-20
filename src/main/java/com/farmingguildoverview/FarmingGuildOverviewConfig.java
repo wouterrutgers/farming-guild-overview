@@ -10,7 +10,7 @@ import net.runelite.client.config.ConfigSection;
 public interface FarmingGuildOverviewConfig extends Config
 {
     @ConfigSection(
-        name = "Display Options",
+        name = "Display options",
         description = "Options for what to show in the overlay",
         position = 0
     )
@@ -26,7 +26,7 @@ public interface FarmingGuildOverviewConfig extends Config
     @ConfigItem(
         keyName = "showEmpty",
         name = "Show empty",
-        description = "Show empty patches in the overlay",
+        description = "Show empty patches",
         section = display
     )
     default boolean showEmpty()
@@ -37,7 +37,7 @@ public interface FarmingGuildOverviewConfig extends Config
     @ConfigItem(
         keyName = "showGrowingComplete",
         name = "Show growing/complete",
-        description = "Show growing and complete patches in the overlay",
+        description = "Show growing and complete patches",
         section = display
     )
     default boolean showGrowingComplete()
